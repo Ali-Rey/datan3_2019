@@ -6,8 +6,6 @@ Alicia Rey-Herme (660004693)
 Introduction
 ------------
 
-Please change the author and date fields above as appropriate. Do not change the output format. Once you have completed the assignment you want to knit your document into a markdown document in the "github\_document" format and then commit both the .Rmd and .md files (and all the associated files with graphs) to your private assignment repository on Github.
-
 Reading data (40 points)
 ------------------------
 
@@ -54,8 +52,6 @@ Tabulate variables (10 points)
 
 In the survey children were asked the following question: "Do you have a social media profile or account on any sites or apps?". In this assignment we want to explore how the probability of having an account on social media depends on children's age and gender.
 
-Tabulate three variables: children's gender, age (please use derived variables) and having an account on social media.
-
 ``` r
 # Column Names:
 # h_sex_dv <- Respondent's Gender (Derived Variables) | Male (1), Female (2), NA (-9)
@@ -64,26 +60,31 @@ Tabulate three variables: children's gender, age (please use derived variables) 
 
 
 #Individual Freq. Tables
-T1 <- table(Data$h_sex_dv)
-View(T1)
-T2 <- table(Data$h_age_dv)
-View(T2)
-T3 <- table(Data$h_ypsocweb)
-View(T3)
-
-#Compiled Freq. table
-Table <- table(Data$h_sex_dv, Data$h_age_dv, Data$h_ypsocweb)
-View(Table)
-
-#Data frame
-Tadat <- data.frame(Data$h_sex_dv, Data$h_age_dv, Data$h_ypsocweb)
-View(Tadat)
+table(Data$h_sex_dv)
 ```
+
+    ## 
+    ##    1    2 
+    ## 1619 1651
+
+``` r
+table(Data$h_age_dv)
+```
+
+    ## 
+    ##  10  11  12  13  14  15  16 
+    ## 553 512 531 584 483 602   5
+
+``` r
+table(Data$h_ypsocweb)
+```
+
+    ## 
+    ##   -9    1    2 
+    ##   11 2634  625
 
 Recode variables (10 points)
 ----------------------------
-
-We want to create a new binary variable for having an account on social media so that 1 means "yes", 0 means "no", and all missing values are coded as NA. We also want to recode gender into a new variable with the values "male" and "female" (this can be a character vector or a factor).
 
 ``` r
 # Create a new binary variable (SocialMedia) by recoding variable h_ypsocweb so that 1 means "yes", 0 means "no", missing values as NA
@@ -108,23 +109,22 @@ Data$Gender[Data$h_sex_dv==1] <- "male"
 ``` r
 Data$Gender[Data$h_sex_dv==2] <- "female"
 
-# Rename h_age_dv to Age for clarity
+# Rename h_age_dv to Age for consistency
 Data$Age <- Data$h_age_dv
 ```
 
 Calculate means (10 points)
 ---------------------------
 
-Produce code that calculates probabilities of having an account on social media (i.e. the mean of your new binary variable produced in the previous problem) by age and gender (please filter out children who are aged 16).
-
 ``` r
-# Data is grouped by age and then sex, mean of h_ypsocweb is calculated for each pairing of the variables.
+# Data is grouped by age and then sex, mean of h_ypsocweb is calculated for each pairing of the variables, filtering out respondents who are aged 16.
    Data %>%
    group_by(Age, Gender) %>%
+   filter(Age != 16) %>%
    summarise(Probability=mean(SocialMedia, na.rm = TRUE))
 ```
 
-    ## # A tibble: 14 x 3
+    ## # A tibble: 12 x 3
     ## # Groups:   Age [?]
     ##      Age Gender Probability
     ##    <dbl> <chr>        <dbl>
@@ -140,8 +140,6 @@ Produce code that calculates probabilities of having an account on social media 
     ## 10    14 male         0.912
     ## 11    15 female       0.970
     ## 12    15 male         0.929
-    ## 13    16 female       1    
-    ## 14    16 male         0.667
 
 Write short interpretation (10 points)
 --------------------------------------
@@ -156,8 +154,9 @@ Visualise results (20 points)
 Data %>%
    group_by(Age, Gender) %>%
    summarise(Probability=mean(SocialMedia, na.rm = TRUE)) %>%
+   filter(Age != 16) %>%
     ggplot(aes(fill=Gender, y=Probability, x=Age)) +
-     geom_bar(position="dodge", stat="identity")
+    geom_bar(position="dodge", stat="identity")
 ```
 
 ![](Test_Assignment_files/figure-markdown_github/unnamed-chunk-5-1.png)
