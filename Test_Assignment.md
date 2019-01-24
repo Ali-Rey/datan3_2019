@@ -1,6 +1,6 @@
 Test statistical assignment
 ================
-Alicia Rey-Herme (660004693
+Alicia Rey-Herme (660004693)
 22 January 2019
 
 Introduction

@@ -1,6 +1,6 @@
 ---
 title: "Test statistical assignment"
-author: "Alicia Rey-Herme (660004693"
+author: "Alicia Rey-Herme (660004693)"
 date: "22 January 2019"
 output: github_document
 ---
