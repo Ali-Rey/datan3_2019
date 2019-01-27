@@ -70,11 +70,11 @@ Data$Age <- Data$h_age_dv
 
 ```{r}
 
-# Data is grouped by age and then sex, mean of h_ypsocweb is calculated for each pairing of the variables, filtering out respondents who are aged 16.
+# Calculating probability for each pairing of Age and Gender
    Data %>%
-   group_by(Age, Gender) %>%
-   filter(Age != 16) %>%
-   summarise(Probability=mean(SocialMedia, na.rm = TRUE))
+   group_by(Age, Gender) %>%  # Categorise by Age and Gender
+   filter(Age != 16) %>%  # Filter out respondents aged 16
+   summarise(Probability=mean(SocialMedia, na.rm = TRUE))  # Using mean() to calculate probability
 
 ```
 
@@ -91,9 +91,9 @@ Data %>%
    group_by(Age, Gender) %>%
    summarise(Probability=mean(SocialMedia, na.rm = TRUE)) %>%
    filter(Age != 16) %>%
-    ggplot(aes(fill=Gender, y=Probability, x=Age)) +
-    geom_bar(position="dodge", stat="identity")
-
+    ggplot(aes(fill=Gender, y=Probability, x=Age)) +  # Plotting the graph
+    geom_bar(position="dodge", stat="identity") +  # Choosing bar graph and its' properties
+   ggtitle("Probability of owning a Social Media Account given Gender and Age")  # Add title
 ```
 
 A bar plot would be most appropriate for visualising the data as it can compare probability values between female and male respondents as well as track the change over age.
