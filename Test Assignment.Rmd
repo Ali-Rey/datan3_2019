@@ -38,7 +38,6 @@ In the survey children were asked the following question: "Do you have a social 
 # h_age_dv <- Respondent's Age (Derived Variables) | Ages 10-16
 # h_ypsocweb <- Respondent's answer to "Do you have a social media profile or account on any sites or apps? | Yes (1), No (2), NA (-9)
 
-
 #Individual Freq. Tables
 table(Data$h_sex_dv)
 table(Data$h_age_dv)
